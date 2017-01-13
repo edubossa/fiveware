@@ -1,0 +1,129 @@
+<!DOCTYPE HTML>
+<html>
+<head> 
+    <title>Fiveware Web</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+    <script>
+        $(document).ready(function(){
+
+            $("button").click(function(){
+                $.ajax({
+                    url: "http://127.0.0.1:8080/cadastrar",
+                    type : 'post',
+                    data : $("form").serialize(),
+                    success: function(result){
+                        console.log(result);
+
+                        $('#table_user > tbody:last').append(
+                        '<tr>' +
+                            '<td>'+result.id+'</td>' +
+                            '<td>'+result.nome+'</td>' +
+                            '<td>'+result.termo+'</td>' +
+                            '<td>'+result.curso+'</td>' +
+                            '<td>'+result.sexo+'</td>' +
+                        '</tr>');
+
+                    },
+                    error: function(erro){
+                        $('#div1').html(erro);
+                        console.log("Error: " + erro);
+                    }
+                });
+            });
+
+        });
+
+    </script>
+
+</head>
+<body>
+
+<div class="container">
+
+    <h3>Cadastro</h3>
+
+    <div class="collapse" id="msg">
+
+        <div class="alert alert-success alert-dismissable" visible="false">
+            <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+            <strong>Success!</strong> Dados cadastrados com sucesso.
+        </div>
+
+    </div>
+
+
+    <div class="row">
+
+            <div class="col-md-8">
+                <form>
+
+                    <div class="form-group">
+                        <label for="nome" class="control-label">Nome:</label>
+                        <input type="text" class="form-control" name="nome" id="nome" placeholder="Digite seu nome..." >
+                    </div>
+                    <div class="checkbox">
+                        <label class="checkbox-inline">
+                            <input type="checkbox" name="termo" value="Aceito"> Aceito os termos do cadastro.
+                        </label>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="nome" class="control-label">Curso: </label>
+                        <select class="form-control" name="curso" >
+                            <option value="SI">Sistema de Informação</option>
+                            <option value="EN">Engenharia</option>
+                            <option value="BD">Banco de Dados</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="radio-inline">
+                            <input type="radio" name="sexo" value="M"> Masculino
+                        </label>
+                        <label class="radio-inline">
+                            <input type="radio" name="sexo" value="F"> Feminino
+                        </label>
+                    </div>
+
+                    <button type="button" class="btn btn-primary" data-toggle="collapse"
+                            data-target="#msg"aria-expanded="false" aria-controls="msg">Enviar</button>
+
+                </form>
+            </div>
+
+    </div>
+
+
+    <br><br><br>
+
+    <div class="row">
+        <div class="col-md-12">
+            <table id="table_user" class="table table-striped table-bordered table-hover table-condensed">
+                <thead>
+                <tr>
+                    <th>ID:</th>
+                    <th>Nome:</th>
+                    <th>Termo:</th>
+                    <th>Curso:</th>
+                    <th>Sexo:</th>
+                </tr>
+                </thead>
+                <tbody>
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+
+</div>
+
+
+</body>
+</html>
